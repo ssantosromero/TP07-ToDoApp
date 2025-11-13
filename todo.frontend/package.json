@@ -14,13 +14,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "cy:open": "cypress open",
+  "cy:run": "cypress run",
+  "coverage:report": "nyc report --reporter=lcov"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -44,10 +45,5 @@
     "cypress": "^15.6.0",
     "istanbul-lib-coverage": "^3.2.2",
     "nyc": "^17.1.0"
-  },
-  "scripts": {
-  "cy:run": "cypress run",
-  "coverage:report": "nyc report --reporter=lcov"
-}
-
+  }
 }
