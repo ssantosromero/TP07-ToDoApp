@@ -40,6 +40,14 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^15.6.0"
-  }
+    "@cypress/code-coverage": "^3.14.7",
+    "cypress": "^15.6.0",
+    "istanbul-lib-coverage": "^3.2.2",
+    "nyc": "^17.1.0"
+  },
+  "scripts": {
+  "cy:run": "cypress run",
+  "coverage:report": "nyc report --reporter=lcov"
+}
+
 }
