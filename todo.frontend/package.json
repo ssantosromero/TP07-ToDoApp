@@ -16,13 +16,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-
     "ci:start": "HOST=0.0.0.0 react-scripts start",
     "ci:test": "start-server-and-test ci:start http://localhost:3000 cy:run",
-
     "coverage:report": "nyc report --reporter=lcov"
   },
   "eslintConfig": {
@@ -48,6 +45,7 @@
     "cypress": "^15.6.0",
     "istanbul-lib-coverage": "^3.2.2",
     "nyc": "^17.1.0",
+    "serve": "^14.2.5",
     "start-server-and-test": "^2.0.6"
   }
 }
