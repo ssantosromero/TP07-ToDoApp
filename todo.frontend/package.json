@@ -12,16 +12,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "HOST=0.0.0.0 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "cy:run": "cypress run",
-    "cy:open": "cypress open",
-    "ci:start": "HOST=0.0.0.0 react-scripts start",
-    "ci:test": "start-server-and-test ci:start http://localhost:3000 cy:run",
-    "coverage:report": "nyc report --reporter=lcov"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "cy:run": "cypress run",
+  "serve": "serve -s build -l 3000",
+  "coverage:report": "nyc report --reporter=lcov"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
