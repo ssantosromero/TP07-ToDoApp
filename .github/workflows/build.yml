@@ -2,48 +2,19 @@ name: Build and analyze
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Check out code
+      uses: actions/checkout@v4
 
-    # 1) Set up Node
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 20
-
-    # 2) FRONTEND: install
-    - name: Install frontend dependencies
-      working-directory: ./todo.frontend
-      run: npm install
-
-    # 3) FRONTEND: build
-    - name: Build frontend
-      working-directory: ./todo.frontend
-      run: npm run build
-
-    # 4) Run Cypress tests
-    - name: Run Cypress tests
-      working-directory: ./todo.frontend
-      run: npm run cy:run
-
-    # 5) Generate coverage report
-    - name: Generate coverage report
-      working-directory: ./todo.frontend
-      run: npm run coverage:report
-
-    # 6) MOVER COVERAGE AL ROOT DEL PROYECTO
-    - name: Move coverage to root
-      run: |
-        mkdir -p coverage
-        cp todo.frontend/coverage/lcov.info coverage/lcov.info
-
-    # 7) ANALISIS CON SONARCLOUD (AL FINAL)
+    # ----- SONARCLOUD -----
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
       with:
@@ -51,3 +22,33 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://sonarcloud.io
+
+    # ----- SETUP NODE -----
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    # ----- INSTALL FRONTEND -----
+    - name: Install frontend dependencies
+      working-directory: ./todo.frontend
+      run: npm install
+
+    # ----- BUILD FRONTEND -----
+    - name: Build frontend
+      working-directory: ./todo.frontend
+      run: npm run build
+
+    # ----- RUN CYPRESS WITH SERVER -----
+    - name: Run Cypress tests
+      working-directory: ./todo.frontend
+      run: npm run cy:ci
+
+    # ----- GENERATE COVERAGE -----
+    - name: Generate coverage report
+      working-directory: ./todo.frontend
+      run: npm run coverage:report
+
+    # ----- MOVE COVERAGE TO ROOT FOR SONAR -----
+    - name: Move coverage to root
+      run: mv todo.frontend/coverage/lcov.info lcov.info
