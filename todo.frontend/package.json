@@ -2,11 +2,9 @@
   "name": "todo.frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5007",
   "dependencies": {
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -14,18 +12,19 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "start": "HOST=0.0.0.0 react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject",
+    "start": "HOST=0.0.0.0 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
 
-  "cy:run": "cypress run",
-  "coverage:report": "nyc report --reporter=lcov",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
 
-  "ci:start": "HOST=0.0.0.0 react-scripts start",
-  "ci:test": "start-server-and-test ci:start http://localhost:3000 cy:run"
-},
+    "ci:start": "HOST=0.0.0.0 react-scripts start",
+    "ci:test": "start-server-and-test ci:start http://localhost:3000 cy:run",
 
+    "coverage:report": "nyc report --reporter=lcov"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -49,6 +48,6 @@
     "cypress": "^15.6.0",
     "istanbul-lib-coverage": "^3.2.2",
     "nyc": "^17.1.0",
-    "start-server-and-test": "^2.1.2"
+    "start-server-and-test": "^2.0.6"
   }
 }

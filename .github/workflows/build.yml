@@ -1,63 +1,55 @@
-name: Build
+name: Build and analyze
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v4
+      - name: Set up job
+        uses: actions/checkout@v4
 
-    # ---------- NODE SETUP ----------
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
+      # 1) SONARCLOUD
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
 
-    # ---------- 1) SONARCLOUD SCAN ----------
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v2
-      with:
-        projectBaseDir: .
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: https://sonarcloud.io
+      # 2) SETUP NODE
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
 
-    # ---------- 2) FRONTEND: INSTALL ----------
-    - name: Install frontend dependencies
-      working-directory: ./todo.frontend
-      run: npm install
+      # 3) Install frontend dependencies
+      - name: Install frontend dependencies
+        working-directory: ./todo.frontend
+        run: npm install
 
-    # ---------- 3) FRONTEND: BUILD ----------
-    - name: Build frontend
-      working-directory: ./todo.frontend
-      run: npm run build
+      # 4) Build frontend (necesario para Sonar)
+      - name: Build frontend
+        working-directory: ./todo.frontend
+        run: npm run build
 
-    # ---------- 4) FRONTEND: CYPRESS CI TESTS ----------
-    - name: Run Cypress tests
-      working-directory: ./todo.frontend
-      run: npm run ci:test
+      # 5) Run Cypress tests (arranca server + test)
+      - name: Run Cypress tests
+        working-directory: ./todo.frontend
+        run: npm run ci:test
 
-    # ---------- 5) GENERATE COVERAGE REPORT ----------
-    - name: Generate coverage report
-      working-directory: ./todo.frontend
-      run: npm run coverage:report
+      # 6) Generate coverage report
+      - name: Generate coverage report
+        working-directory: ./todo.frontend
+        run: npm run coverage:report
 
-    # ---------- 6) MOVE COVERAGE TO ROOT PARA SONAR ----------
-    - name: Move coverage to root
-      run: cp -r todo.frontend/coverage .
-
-    # ---------- 7) RUN SONARCLOUD ANALYSIS ----------
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v2
-      with:
-        projectBaseDir: .
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: https://sonarcloud.io
+      # 7) Move coverage to root so SonarCloud lo encuentre
+      - name: Move coverage to root
+        run: mv todo.frontend/coverage/lcov.info lcov.info
