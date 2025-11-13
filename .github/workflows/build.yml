@@ -15,7 +15,7 @@ jobs:
     # 1) Set up Node
     - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
 
     # 2) FRONTEND: install
     - name: Install frontend dependencies
