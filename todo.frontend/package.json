@@ -1,25 +1,22 @@
 {
   "name": "todo.frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject",
-  "cy:run": "cypress run",
-  "serve": "serve -s build -l 3000",
-  "coverage:report": "nyc report --reporter=lcov"
-},
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+
+    "cy:run": "cypress run",
+    "cy:ci": "cypress run --browser chrome --headless"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -39,11 +36,6 @@
     ]
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.14.7",
-    "cypress": "^15.6.0",
-    "istanbul-lib-coverage": "^3.2.2",
-    "nyc": "^17.1.0",
-    "serve": "^14.2.5",
-    "start-server-and-test": "^2.0.6"
+    "cypress": "^15.6.0"
   }
 }
