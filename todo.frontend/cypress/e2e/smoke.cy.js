@@ -1,6 +1,6 @@
-describe('Test básico', () => {
-    it('pasa siempre', () => {
-      expect(true).to.equal(true);
-    });
+describe("Smoke test", () => {
+  it("works", () => {
+    cy.visit("/");
+    cy.contains("React").should("exist");
   });
-  
+});
