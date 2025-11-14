@@ -4,3 +4,4 @@ describe("Smoke test", () => {
     cy.contains("ToDoApp – TP07").should("exist");
   });
 });
+// Trigger new build
