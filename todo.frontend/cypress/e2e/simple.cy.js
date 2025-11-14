@@ -1,5 +1,6 @@
 describe('Test básico', () => {
-    it('corre sin errores', () => {
+    it('pasa siempre', () => {
       expect(true).to.equal(true);
     });
   });
+  
